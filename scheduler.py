@@ -10,7 +10,15 @@ def getFileName():
             goodFile = True
             return fileName
         except FileNotFoundError:
-            print("File not found.\n")
+            print("File not found.\n ")
+            createFile = input(f"Would you like to create a file named {fileName}? y/n ")
+            if createFile == "y":
+                goodFile = True
+                newFileName = open(fileName, "a")
+                newFileName.close()
+                return fileName
+            else:
+                goodFile = False
 
 
 def options():
@@ -37,7 +45,7 @@ def options():
 
 def OpenFile(fileName):
     print(f"Opening {fileName} to read.")
-    with open(fileName, 'r') as myFile:
+    with open(fileName, "r") as myFile:
         for line in myFile:
             line = line.strip()
             print(line)
