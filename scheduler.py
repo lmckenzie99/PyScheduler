@@ -73,11 +73,12 @@ def writeToFile(fileName):
             rows[0].append(dueDate)
             isEndInput = input("Any other tasks y/n? ")
             isEndInput.strip().lower()
+            csvWriter.writerows(rows)
             if isEndInput == "n":
                 endOfInput = True
             else:
+                rows[0].clear()
                 endOfInput = False
-        csvWriter.writerows(rows)
     return
 
 
