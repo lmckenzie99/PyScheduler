@@ -1,3 +1,5 @@
+import csv
+
 def getFileName():
     goodFile = False
 
@@ -52,8 +54,30 @@ def OpenFile(fileName):
     return
 
 
-def writeToFile():
-    print("Write file")
+def writeToFile(fileName):
+    with open(fileName, 'w') as myFile:
+        endOfInput = False
+        csvField = ["Class", "Task", "Due date"]
+        rows = [
+            []
+        ]
+        csvWriter = csv.writer(myFile)
+        csvWriter.writerow(csvField)
+
+        while endOfInput == False:
+            subject = input("Enter class: ")
+            rows[0].append(subject)
+            task = input("Enter task: ")
+            rows[0].append(task)
+            dueDate = input("Enter due date(mm.dd): ")
+            rows[0].append(dueDate)
+            isEndInput = input("Any other tasks y/n? ")
+            isEndInput.strip().lower()
+            if isEndInput == "n":
+                endOfInput = True
+            else:
+                endOfInput = False
+        csvWriter.writerows(rows)
     return
 
 
@@ -63,7 +87,7 @@ def main():
     if option == "open":
         OpenFile(fileName)
     elif option == "write":
-        writeToFile()
+        writeToFile(fileName)
 
 
 main()
