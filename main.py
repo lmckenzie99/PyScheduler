@@ -6,7 +6,9 @@ def getFileName():
     goodFile = False
 
     while goodFile == False:
-        fileName = input("Enter file name: ")
+        file = input("Enter file name: ")
+        path = "/home/lmckenzie/Documents/School/"
+        fileName = os.path.join(path, file + ".csv")
         try:
             myFile = open(fileName, "r")
             myFile.close()
@@ -16,8 +18,7 @@ def getFileName():
         except FileNotFoundError:
             print("File not found.\n ")
             createFile = input(
-                f"Would you like to create a file named {fileName}? y/n "
-            )
+                f"Would you like to create a file named {file}? y/n ")
             if createFile == "y":
                 goodFile = True
                 newFileName = open(fileName, "a")
@@ -81,6 +82,12 @@ def getLastId(fileName):
             return 0  # If no data rows, start from 0
 
 
+def checkHeader(fileName):
+    with open(fileName, "r") as fileName:
+        checkHeader = fileName.read(1024)
+        hasHeader = csv.Sniffer().has_header(checkHeader)
+    return hasHeader
+
 def writeToFile(fileName):
     previousID = getLastId(fileName)
     isOneClass = input("Is this for one class (y/n)")
@@ -90,12 +97,16 @@ def writeToFile(fileName):
         isClassTrue = True
     else:
         subject = subject
-    with open(fileName, "w") as myFile:
+
+    hasHeader = checkHeader(fileName)
+    with open(fileName, "a") as myFile:
         endOfInput = False
         csvField = ["ID", "Class", "Task", "Due date"]
         rows = [[]]
         csvWriter = csv.writer(myFile)
-        csvWriter.writerow(csvField)
+        
+        if hasHeader == False:
+            csvWriter.writerow(csvField)
 
         while endOfInput == False:
             previousID += 1
