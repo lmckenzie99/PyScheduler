@@ -83,6 +83,13 @@ def getLastId(fileName):
 
 def writeToFile(fileName):
     previousID = getLastId(fileName)
+    isOneClass = input("Is this for one class (y/n)")
+    isOneClass.strip().lower()
+    if isOneClass == "y":
+        subject = input("Enter class: ")
+        isClassTrue = True
+    else:
+        subject = subject
     with open(fileName, "w") as myFile:
         endOfInput = False
         csvField = ["ID", "Class", "Task", "Due date"]
@@ -93,8 +100,11 @@ def writeToFile(fileName):
         while endOfInput == False:
             previousID += 1
             rows[0].append(previousID)
-            subject = input("Enter class: ")
-            rows[0].append(subject)
+            if isClassTrue:
+                rows[0].append(subject)
+            else:
+                subject = input("Enter class: ")
+                rows[0].append(subject)
             task = input("Enter task: ")
             rows[0].append(task)
             dueDate = input("Enter due date(mm.dd): ")
