@@ -144,6 +144,7 @@ def removeFromFile(fileName, task_id):
     updated_rows = [header]
 
     task_found = False
+    adjust_ids = False
     for row in rows[1:]:
         row_id = int(row[0])
 
